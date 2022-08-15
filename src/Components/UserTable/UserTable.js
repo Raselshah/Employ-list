@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { styled } from "@mui/material/styles";
@@ -10,20 +10,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import axios from "axios";
-import { Button, Chip } from "@mui/material";
+import { Chip } from "@mui/material";
 
-const UserTable = () => {
-  const [userInfo, setUserInfo] = useState([]);
+const UserTable = ({ newUser }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    axios
-      .get(
-        "https://opensheet.elk.sh/1gH5Kle-styszcHF2G0H8l1w1nDt1RhO9NHNCpHhKK0M/employees"
-      )
-      .then((res) => setUserInfo(res.data));
-  }, []);
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -83,7 +73,7 @@ const UserTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userInfo
+            {newUser
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <StyledTableRow key={row.id}>
@@ -123,7 +113,7 @@ const UserTable = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={userInfo.length}
+        count={newUser.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
