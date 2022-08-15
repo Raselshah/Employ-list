@@ -1,24 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Box, maxWidth } from "@mui/system";
+import UserTable from "./Components/UserTable/UserTable";
+import AllUserTable from "./Components/AllUserTable/AllUserTable";
+import { Routes, Route } from "react-router-dom";
+import UserDetailsTable from "./Components/UserDetailsTable/UserDetailsTable";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ maxWidth: "1540px", padding: "15px" }}>
+      <Routes>
+        <Route path="/" element={<UserTable />} />
+        <Route path="/userDetails/:id" element={<UserDetailsTable />} />
+      </Routes>
+    </Box>
   );
 }
 
