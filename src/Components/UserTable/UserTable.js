@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { styled } from "@mui/material/styles";
@@ -10,10 +10,29 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import { Chip } from "@mui/material";
+import { Box, Chip } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import SearchIcon from "@mui/icons-material/Search";
+import { Button } from "@mui/material";
+import axios from "axios";
 
-const UserTable = ({ newUser }) => {
+const UserTable = () => {
   const navigate = useNavigate();
+
+  const [userInfo, setUserInfo] = useState([]);
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    axios
+      .get(
+        "https://opensheet.elk.sh/1gH5Kle-styszcHF2G0H8l1w1nDt1RhO9NHNCpHhKK0M/employees"
+      )
+      .then((res) => setUserInfo(res.data));
+  }, []);
+
+  const newUser = userInfo.filter((user) =>
+    user.first_name.toLowerCase().includes(value.toLowerCase())
+  );
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -51,12 +70,42 @@ const UserTable = ({ newUser }) => {
     setPage(0);
   };
 
+  const handleSearch = (e) => {
+    setValue(e.target.value);
+  };
   const handleUserDetails = (name) => {
     navigate(`/userDetails/${name}`);
   };
 
   return (
-    <div>
+    <Box sx={{ maxWidth: "1540px", padding: "15px" }}>
+      <Box
+        sx={{
+          marginTop: "12px",
+          marginBottom: "12px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <TextField
+          value={value}
+          onChange={handleSearch}
+          id="input-with-icon-textfield"
+          label="Search by name"
+          InputProps={{
+            startAdornment: (
+              <SearchIcon position="start">
+                <AccountCircle />
+              </SearchIcon>
+            ),
+          }}
+          variant="standard"
+        />
+        <Button variant="outlined">
+          {" "}
+          <SearchIcon position="start" /> Search
+        </Button>
+      </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -119,7 +168,7 @@ const UserTable = ({ newUser }) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </div>
+    </Box>
   );
 };
 

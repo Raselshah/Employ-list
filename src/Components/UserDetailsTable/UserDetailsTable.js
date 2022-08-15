@@ -14,8 +14,8 @@ const UserDetailsTable = () => {
   }, []);
   return (
     <div>
-      <h4>Last Name: {userInfoDetails.last_name}</h4>
       <h4>First Name: {userInfoDetails.first_name}</h4>
+      <h4>Last Name: {userInfoDetails.last_name}</h4>
       <h4>Data Of Birth: {userInfoDetails.date_of_birth}</h4>
       <h4>Address: {userInfoDetails.address}</h4>
       <h4>Date of Joining: {userInfoDetails.date_of_joining}</h4>
