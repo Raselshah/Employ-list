@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { Box } from "@mui/system";
 
 const UserDetailsTable = () => {
   const [userInfoDetails, setUserInfoDetails] = useState({});
@@ -13,15 +21,40 @@ const UserDetailsTable = () => {
       .then((res) => setUserInfoDetails(res.data[0]));
   }, []);
   return (
-    <div>
-      <h4>First Name: {userInfoDetails.first_name}</h4>
-      <h4>Last Name: {userInfoDetails.last_name}</h4>
-      <h4>Data Of Birth: {userInfoDetails.date_of_birth}</h4>
-      <h4>Address: {userInfoDetails.address}</h4>
-      <h4>Date of Joining: {userInfoDetails.date_of_joining}</h4>
-      <h4>Salary: {userInfoDetails.salary}</h4>
-      <h4>Designation: {userInfoDetails.designation}</h4>
-    </div>
+    <Box sx={{ maxWidth: "1540px", margin: "auto", padding: "12px" }}>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="right">First Name</TableCell>
+              <TableCell align="right">Last Name</TableCell>
+              <TableCell align="right">Data Of Birth</TableCell>
+              <TableCell align="right">Address</TableCell>
+              <TableCell align="right">Date of Joining</TableCell>
+              <TableCell align="right">Salary</TableCell>
+              <TableCell align="right">Designation</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell align="right">{userInfoDetails.first_name}</TableCell>
+              <TableCell align="right">{userInfoDetails.last_name}</TableCell>
+              <TableCell align="right">
+                {userInfoDetails.date_of_birth}
+              </TableCell>
+              <TableCell align="right">{userInfoDetails.address}</TableCell>
+              <TableCell align="right">
+                {userInfoDetails.date_of_joining}
+              </TableCell>
+              <TableCell align="right">{userInfoDetails.salary}</TableCell>
+              <TableCell align="right">{userInfoDetails.designation}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
 
